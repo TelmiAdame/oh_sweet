@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-ohsweet-purple px-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary px-3">
       <img
         src="../../assets/logo_oh_sweet.png"
         alt="logo_oh_sweet"
@@ -18,13 +18,15 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link active text-light" href="#">Home</a>
-          <button class="nav-item nav-link text-light" @click="openView">Caixa</button>
+        <ul class="navbar-nav">
+          <li>
+            <a class="nav-item nav-link active text-light"  @click="openViewHome">Home</a>
+          </li>
+          <a class="nav-item nav-link text-light" @click="openView">Caixa</a>
           <a class="nav-link disabled" aria-disabled="true">Venda</a>
           <a class="nav-link disabled" aria-disabled="true">Pedido</a>
           <a class="nav-link disabled" aria-disabled="true">Estoque</a>
-        </div>
+        </ul>
       </div>
       <div>
         <form class="d-flex" role="search">
@@ -58,8 +60,10 @@ export default {
   },
   methods: {
     openView() {
-      console.log('openView')
       this.$router.push({ name: "caixa" });
+    },
+    openViewHome() {
+       this.$router.push({ name: "home" });
     }
   }
 }

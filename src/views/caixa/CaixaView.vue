@@ -19,53 +19,40 @@
           </button>
         </div>
       </div>
-      <div>
-        <table class="table table-striped table-hover">
-          <thead class="table-primary">
-            <tr>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-             
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <tabela
+        :dados-tabela="dadosTabela"
+      ></tabela>
     </div>
   </div>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
+import Tabela from '../../components/Tabela/tabela.vue'
+import api from '../../api/api'
 export default {
   components: {
-    FullLayout
+    FullLayout, 
+    Tabela
   },
-  mounted() {},
+  mounted() {
+    this.obterDadosTabela()
+  },
   data() {
     return {
       cardTitle: 'Caixa',
       cardSubtitle: '',
-      buttonSearch: 'Buscar'
+      buttonSearch: 'Buscar',
+      dadosTabela: null,
+    }
+  },
+  methods: {
+    async obterDadosTabela(){
+      this.dadosTabela = (await api.list('movimentacao_caixa')).reverse()
     }
   }
 }
 </script>
 
-<style>
+<style scope>
+
 </style>

@@ -2,8 +2,8 @@ import { supabase } from '../lib/supabaseClient'
 
 const api = {
 
-  async list() {
-    const { data, error } = await supabase.from('sabor').select('*')
+  async list(table) {
+    const { data, error } = await supabase.from(table).select('*')
     if (error) throw error
     return data
   },

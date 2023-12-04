@@ -1,16 +1,20 @@
-@import '../node_modules/bootstrap/scss/functions';
-@import '../node_modules/bootstrap/scss/variables';
-@import '../node_modules/bootstrap/scss/mixins';
+// @import '../node_modules/bootstrap/scss/functions';
+// @import '../node_modules/bootstrap/scss/variables';
+// @import '../node_modules/bootstrap/scss/mixins';
 
-$custom-colors: (
-  'ohsweet-yellow': #f2cb04,
-  'ohsweet-purple': #494367,
-  'ohsweet-pink': #d95f98,
-  'ohsweet-blue': #29b8c0,
-  'ohsweet-gray': #e1e1e1
-);
+$primary: #f2cb04;
+$secondary: #494367;
+$bs-secondary-color: #494367;
 
-$theme-colors: map-merge($theme-colors, $custom-colors);
+// $custom-colors: (
+//   'ohsweet-yellow': #f2cb04,
+//   'ohsweet-purple': #494367,
+//   'ohsweet-pink': #d95f98,
+//   'ohsweet-blue': #29b8c0,
+//   'ohsweet-gray': #e1e1e1
+// );
+
+// $theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import './assets/base.css'
+@import './assets/reset.css'
