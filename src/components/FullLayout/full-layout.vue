@@ -2,7 +2,7 @@
   <header-system />
 </template>
 <script>
-import HeaderSystem from './headerSystem.vue'
+import HeaderSystem from './header-system.vue'
 export default {
   components: {
     HeaderSystem
