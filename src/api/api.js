@@ -14,15 +14,15 @@ const api = {
     return data[0]
   },
 
-  async pots(table, form) {
+  async post(table, form) {
     const { data, error } = await supabase
     .from(table)
-    .insert([{
+    .insert({
         ...form,
         //user_id:user.value.id
-     }])
+     })
     if (error) throw error
-    return data[0]
+    return data
   },
 
   async update(table, form) {

@@ -1,20 +1,14 @@
-// @import '../node_modules/bootstrap/scss/functions';
-// @import '../node_modules/bootstrap/scss/variables';
-// @import '../node_modules/bootstrap/scss/mixins';
-
 $primary: #f2cb04;
 $secondary: #494367;
 $bs-secondary-color: #494367;
+$dark: #494367;
 
-// $custom-colors: (
-//   'ohsweet-yellow': #f2cb04,
-//   'ohsweet-purple': #494367,
-//   'ohsweet-pink': #d95f98,
-//   'ohsweet-blue': #29b8c0,
-//   'ohsweet-gray': #e1e1e1
-// );
-
-// $theme-colors: map-merge($theme-colors, $custom-colors);
+//         * $secondary
+//         * $success
+//         * $danger
+//         * $warning
+//         * $info
+//         * $light
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import './assets/reset.css'

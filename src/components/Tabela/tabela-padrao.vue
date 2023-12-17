@@ -8,7 +8,6 @@
             :key="key"
             scope="col"
             class=""
-            style="background-color: #494367"
           >
             {{ item }}
           </th>

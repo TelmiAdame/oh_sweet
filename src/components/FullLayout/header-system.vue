@@ -18,6 +18,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <!-- TODO  criar lista de link para nave -->
         <ul class="navbar-nav">
           <li>
             <a class="nav-item nav-link active text-light"  @click="openViewHome">Home</a>

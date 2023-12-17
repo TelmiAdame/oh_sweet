@@ -15,20 +15,34 @@
         <div class="modal-body">
           <form action="">
             <div class="mb-3">
-              <input-text placeholder="Descrição" label="Descrição"></input-text>
+              <input-base
+                v-model="form.descricao"
+                type="text"
+                placeholder="Descrição"
+                label="Descrição"
+              >
+              </input-base>
             </div>
             <div class="row mb-3">
               <div class="col-md-6">
-                <input-text placeholder="Valor" label="Valor"></input-text>
+                <input-currency
+                  v-model="form.valor"
+                  placeholder="Valor"
+                  label="Valor"
+                ></input-currency>
               </div>
               <div class="col-md-6">
-                <input-text placeholder="Data" label="Data"></input-text>
+                <input-base
+                  v-model="form.data"
+                  type="date"
+                  placeholder="Data"
+                  label="Data"
+                ></input-base>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button> -->
           <button type="button" class="btn btn-primary" @click="saveForm">Salvar</button>
         </div>
       </div>
@@ -37,26 +51,28 @@
 </template>
 
 <script>
-import InputText from '../Inputs/input-text.vue'
+import InputAll from '../../components/Inputs/index'
 export default {
-  props:{
-    dataForm: { type: Object, default: () => {}}
+  props: {
+    dataForm: { type: Object, default: () => {} }
   },
   components: {
-    InputText
+    ...InputAll
   },
   mounted() {},
   data() {
-    return {}
+    return {
+      form: {
+        descricao: null,
+        valor: null,
+        data: null
+      }
+    }
   },
   methods: {
-    saveForm(){
-      console.log('saveForm')
-      
+    saveForm() {
+      this.$emit('saveForm', this.form)
     }
   }
 }
 </script>
-
-<style>
-</style>

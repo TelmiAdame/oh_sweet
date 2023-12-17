@@ -19,49 +19,47 @@
             class="btn rounded-pill"
             data-bs-toggle="modal"
             data-bs-target="#modalAddEdit"
-            @click="openModalAdd"
           >
             {{ buttonAdd }}
           </button>
         </div>
       </div>
-      <tabela :dados-tabela="dadosTabela"></tabela>
-      <modal-add-edit id="modalAddEdit"></modal-add-edit>
+      <tabela :dados-tabela="dataTable"></tabela>
+      <modal-add-edit id="modalAddEdit" @saveForm="addCashMovement"></modal-add-edit>
     </div>
   </div>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
-import Tabela from '../../components/Tabela/tabela.vue'
-import ModalAddEdit from '../../components/Modals/modal-add-edit.vue'
+import Tabela from '../../components/Tabela/tabela-padrao.vue'
+import ModalAddEdit from './ModalAddEdit.vue'
 import api from '../../api/api'
 export default {
   components: {
     FullLayout,
     Tabela,
-    ModalAddEdit,
+    ModalAddEdit
   },
   mounted() {
-    this.obterDadosTabela()
+    this.getDataTable()
   },
   data() {
     return {
       cardTitle: 'Caixa',
       cardSubtitle: '',
       buttonAdd: 'Adicionar',
-      dadosTabela: null
+      dataTable: null
     }
   },
   methods: {
-    async obterDadosTabela() {
-      this.dadosTabela = (await api.list('movimentacao_caixa')).reverse()
+    async getDataTable() {
+      this.dataTable = (await api.list('movimentacao_caixa')).reverse()
     },
-    openModalAdd() {
-      console.log('openModalAdd')
+    async addCashMovement(form) {
+      await api.post('movimentacao_caixa', form)
     }
   }
 }
 </script>
 
-<style scope>
-</style>
+<style scope></style>

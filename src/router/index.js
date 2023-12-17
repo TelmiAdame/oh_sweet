@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import CaixaView from '../views/caixa/CaixaView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,9 +12,8 @@ const router = createRouter({
     {
       path: '/caixa',
       name: 'caixa',
-      component: CaixaView
+      component: () => import('../views/caixa/CaixaView.vue')
     }
-    
   ]
 })
 
