@@ -16,18 +16,17 @@
           />
           <button
             type="button"
-            class="btn rounded-pill"
-            data-bs-toggle="modal"
-            data-bs-target="#modalAddEdit"
+            class="btn rounded-pill btn-primary"
+            @click="openModal"
           >
             {{ buttonAdd }}
           </button>
         </div>
       </div>
       <tabela :dados-tabela="dataTable"></tabela>
-      <modal-add-edit id="modalAddEdit" @saveForm="addCashMovement"></modal-add-edit>
     </div>
   </div>
+  <modal-add-edit :is-visible="showModal" @close="closeModal"></modal-add-edit>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
@@ -38,7 +37,7 @@ export default {
   components: {
     FullLayout,
     Tabela,
-    ModalAddEdit
+    ModalAddEdit,
   },
   mounted() {
     this.getDataTable()
@@ -48,15 +47,23 @@ export default {
       cardTitle: 'Caixa',
       cardSubtitle: '',
       buttonAdd: 'Adicionar',
-      dataTable: null
+      dataTable: null,
+      showModal: false,
     }
   },
   methods: {
     async getDataTable() {
       this.dataTable = (await api.list('movimentacao_caixa')).reverse()
     },
-    async addCashMovement(form) {
-      await api.post('movimentacao_caixa', form)
+    // async addCashMovement(form) {
+    //   await api.post('movimentacao_caixa', form)
+    // },
+    openModal() {
+      console.log('openModalAddEdit', this.showModal)
+      this.showModal = true
+    },
+    closeModal() {
+      this.showModal = false;
     }
   }
 }

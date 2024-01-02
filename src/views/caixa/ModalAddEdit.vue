@@ -1,15 +1,16 @@
 <template>
-  <div class="modal" tabindex="-1">
+  <div v-if="isVisible">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 v-if="!dataForm" class="modal-title">Adicionar Movimentação</h5>
-          <h5 v-else class="modal-title">Editar Movimentação</h5>
+          <h5  lass="modal-title">Adicionar Movimentação</h5>
+          <!-- <h5 class="modal-title">Editar Movimentação</h5> -->
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            @click="close"
           ></button>
         </div>
         <div class="modal-body">
@@ -54,7 +55,8 @@
 import InputAll from '../../components/Inputs/index'
 export default {
   props: {
-    dataForm: { type: Object, default: () => {} }
+    // dataForm: { type: Object, default: () => {} },
+    isVisible: { type: Boolean, default: false }
   },
   components: {
     ...InputAll
@@ -65,13 +67,16 @@ export default {
       form: {
         descricao: null,
         valor: null,
-        data: null
+        data: null,
       }
     }
   },
   methods: {
+    close(){
+      this.$emit('close')
+    },
     saveForm() {
-      this.$emit('saveForm', this.form)
+      this.$emit('close', this.form)
     }
   }
 }
