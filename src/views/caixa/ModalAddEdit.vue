@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isVisible" class="modal" tabindex="-1" aria-hidden="true" id="myModal">
+  <div class="modal" tabindex="-1" aria-hidden="true" id="myModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -42,7 +42,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="saveForm">Salvar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="saveForm">Salvar</button>
         </div>
       </div>
     </div>
@@ -54,7 +54,6 @@ import InputAll from '../../components/Inputs/index'
 
 export default {
   props: {
-    isVisible: { type: Boolean, default: false }
   },
   components: {
     ...InputAll
@@ -69,11 +68,8 @@ export default {
     }
   },
   methods: {
-    close() {
-      this.$emit('close')
-    },
     saveForm() {
-      this.$emit('close', this.form)
+      this.$emit('salveForm', this.form)
     }
   }
 }

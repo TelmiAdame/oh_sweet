@@ -28,7 +28,7 @@
       <tabela :dados-tabela="dataTable"></tabela>
     </div>
   </div>
-  <modal-add-edit :is-visible="showModal" @close="closeModal"></modal-add-edit>
+  <modal-add-edit @salveForm="salveForm"></modal-add-edit>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
@@ -51,22 +51,21 @@ export default {
       cardSubtitle: '',
       buttonAdd: 'Adicionar',
       dataTable: null,
-      showModal: false,
     }
   },
   methods: {
     async getDataTable() {
       this.dataTable = (await api.list('movimentacao_caixa')).reverse()
     },
-    // async addCashMovement(form) {
-    //   await api.post('movimentacao_caixa', form)
-    // },
-    openModal() {
-      console.log('openModalAddEdit', this.showModal)
-      this.showModal = true
+    async addCashMovement(form) {
+      await api.post('movimentacao_caixa', form)
     },
-    closeModal() {
-      this.showModal = false;
+    openModal() {
+      console.log('openModalAddEdit')
+ 
+    },
+    salveForm(form) {
+      this.addCashMovement(form)
     }
   }
 }
