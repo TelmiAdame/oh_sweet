@@ -17,18 +17,17 @@
           <button
             type="button"
             class="btn rounded-pill btn-primary"
-            @click="openModal"
-            data-bs-toggle="modal" 
-            data-bs-target="#myModal"
+            data-bs-toggle="modal"
+            data-bs-target="#modalMovimentacaoCaixa"
           >
             {{ buttonAdd }}
           </button>
         </div>
       </div>
-      <tabela :dados-tabela="dataTable"></tabela>
+      <tabela :dados-tabela="dataTable" @removeItem="removeCashMovement"></tabela>
     </div>
   </div>
-  <modal-add-edit @salveForm="salveForm"></modal-add-edit>
+  <modal-add-edit @saveForm="addCashMovement"></modal-add-edit>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
@@ -40,7 +39,7 @@ export default {
   components: {
     FullLayout,
     Tabela,
-    ModalAddEdit,
+    ModalAddEdit
   },
   mounted() {
     this.getDataTable()
@@ -50,22 +49,24 @@ export default {
       cardTitle: 'Caixa',
       cardSubtitle: '',
       buttonAdd: 'Adicionar',
-      dataTable: null,
+      dataTable: null
     }
   },
   methods: {
     async getDataTable() {
+      console.log('atualizou')
       this.dataTable = (await api.list('movimentacao_caixa')).reverse()
     },
     async addCashMovement(form) {
       await api.post('movimentacao_caixa', form)
+      await this.getDataTable()
+    },
+    async removeCashMovement(id) {
+      await api.remove('movimentacao_caixa', id)
+      await this.getDataTable()
     },
     openModal() {
       console.log('openModalAddEdit')
- 
-    },
-    salveForm(form) {
-      this.addCashMovement(form)
     }
   }
 }

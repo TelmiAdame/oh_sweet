@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" tabindex="-1" aria-hidden="true" id="myModal">
+  <div class="modal" tabindex="-1" aria-hidden="true" id="modalMovimentacaoCaixa">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     saveForm() {
-      this.$emit('salveForm', this.form)
+      this.$emit('saveForm', this.form)
     }
   }
 }

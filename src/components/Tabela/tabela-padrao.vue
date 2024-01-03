@@ -3,12 +3,7 @@
     <table class="table table-striped table-hover table-borderless">
       <thead class="table-head table-dark">
         <tr class="table-header">
-          <th
-            v-for="(item, key) in listHeader"
-            :key="key"
-            scope="col"
-            class=""
-          >
+          <th v-for="(item, key) in listHeader" :key="key" scope="col" class="">
             {{ item }}
           </th>
         </tr>
@@ -20,10 +15,10 @@
           <td>{{ movimentacao.saldo }}</td>
           <td>{{ movimentacao.valor }}</td>
           <td>
-            <span role="button" class="me-2"
+            <span role="button" class="me-2" data-bs-toggle="modal" data-bs-target="#modalMovimentacaoCaixa"
               ><icon icon="mdi:edit" :inline="true" :horizontalFlip="true" color="green"
             /></span>
-            <span role="button"
+            <span role="button" @click="removeItem(movimentacao.id)"
               ><icon icon="mdi:delete" :inline="true" :horizontalFlip="true" color="red"
             /></span>
           </td>
@@ -46,9 +41,13 @@ export default {
     return {
       listHeader: ['Descrição', 'Data/Hora', 'Saldo', 'Movimentação', 'Ações']
     }
+  },
+  methods: {
+    removeItem(id) {
+      this.$emit('removeItem', id)
+    }
   }
 }
 </script>
 
-<style>
-</style>
+<style></style>
