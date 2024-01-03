@@ -1,10 +1,9 @@
 <template>
-  <div v-if="isVisible">
+  <div v-if="isVisible" class="modal" tabindex="-1" aria-hidden="true" id="myModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5  lass="modal-title">Adicionar Movimentação</h5>
-          <!-- <h5 class="modal-title">Editar Movimentação</h5> -->
+          <h5 class="modal-title">Adicionar Movimentação</h5>
           <button
             type="button"
             class="btn-close"
@@ -21,8 +20,7 @@
                 type="text"
                 placeholder="Descrição"
                 label="Descrição"
-              >
-              </input-base>
+              ></input-base>
             </div>
             <div class="row mb-3">
               <div class="col-md-6">
@@ -53,26 +51,25 @@
 
 <script>
 import InputAll from '../../components/Inputs/index'
+
 export default {
   props: {
-    // dataForm: { type: Object, default: () => {} },
     isVisible: { type: Boolean, default: false }
   },
   components: {
     ...InputAll
   },
-  mounted() {},
   data() {
     return {
       form: {
         descricao: null,
         valor: null,
-        data: null,
+        data: null
       }
     }
   },
   methods: {
-    close(){
+    close() {
       this.$emit('close')
     },
     saveForm() {

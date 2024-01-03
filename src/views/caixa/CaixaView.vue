@@ -18,6 +18,8 @@
             type="button"
             class="btn rounded-pill btn-primary"
             @click="openModal"
+            data-bs-toggle="modal" 
+            data-bs-target="#myModal"
           >
             {{ buttonAdd }}
           </button>
@@ -33,6 +35,7 @@ import FullLayout from '../../components/FullLayout/full-layout.vue'
 import Tabela from '../../components/Tabela/tabela-padrao.vue'
 import ModalAddEdit from './ModalAddEdit.vue'
 import api from '../../api/api'
+
 export default {
   components: {
     FullLayout,
