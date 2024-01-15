@@ -15,10 +15,10 @@
           <td>{{ movimentacao.saldo }}</td>
           <td>{{ movimentacao.valor }}</td>
           <td>
-            <span role="button" class="me-2" data-bs-toggle="modal" data-bs-target="#modalMovimentacaoCaixa"
-              ><icon icon="mdi:edit" :inline="true" :horizontalFlip="true" color="green"
+            <span role="button" class="me-2" @click="editItem(movimentacao)"
+              ><icon icon="mdi:edit" :inline="true" :horizontalFlip="true" color="green"  
             /></span>
-            <span role="button" @click="removeItem(movimentacao.id)"
+            <span role="button" @click="removeItem(movimentacao)"
               ><icon icon="mdi:delete" :inline="true" :horizontalFlip="true" color="red"
             /></span>
           </td>
@@ -39,15 +39,17 @@ export default {
   mounted() {},
   data() {
     return {
-      listHeader: ['Descrição', 'Data/Hora', 'Saldo', 'Movimentação', 'Ações']
+      listHeader: ['Descrição', 'Data/Hora', 'Saldo', 'Movimentação', 'Ações'],
+      data: null,
     }
   },
   methods: {
     removeItem(id) {
       this.$emit('removeItem', id)
+    },
+    editItem(data) {
+    this.$emit('editItem', data)
     }
   }
 }
 </script>
-
-<style></style>

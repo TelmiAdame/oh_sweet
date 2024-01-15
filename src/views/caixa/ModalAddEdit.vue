@@ -13,6 +13,7 @@
           ></button>
         </div>
         <div class="modal-body">
+          <pre>{{ form }}</pre>
           <form action="">
             <div class="mb-3">
               <input-base
@@ -32,17 +33,22 @@
               </div>
               <div class="col-md-6">
                 <input-base
-                  v-model="form.data"
+                v-model="form.data"
                   type="date"
                   placeholder="Data"
                   label="Data"
+                  :modelValue="form.data"
+                  :readonly="false"
+                  classe="form-control-plaintext"
                 ></input-base>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="saveForm">Salvar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="saveForm">
+            Salvar
+          </button>
         </div>
       </div>
     </div>
@@ -54,6 +60,7 @@ import InputAll from '../../components/Inputs/index'
 
 export default {
   props: {
+    dataEdit: { type: Object, default: () => {} }
   },
   components: {
     ...InputAll
@@ -63,13 +70,37 @@ export default {
       form: {
         descricao: null,
         valor: null,
-        data: null
+        data: new Date().toISOString().split('T')[0],
       }
+    }
+  },
+  mounted() {
+    this.form.data = new Date().toISOString().split('T')[0]
+  },
+  watch: {
+    dataEdit() {
+      this.initialData()
     }
   },
   methods: {
     saveForm() {
-      this.$emit('saveForm', this.form)
+      if (!this.dataEdit?.valor?.id) {
+        
+        this.$emit('saveForm', this.form)
+      } else {
+        this.$emit('editForm', this.form)
+      }
+    },
+    initialData() {
+      this.form = {
+        id:this.dataEdit?.valor?.id,
+        descricao: this.dataEdit?.descricao,
+        valor: this.dataEdit?.valor,
+        // data:
+        //   this.dataEdit && this.dataEdit.data
+        //     ? new Date().toISOString().split('T')[0]
+        //     : null
+      }
     }
   }
 }

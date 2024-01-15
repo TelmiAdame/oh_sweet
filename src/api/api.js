@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabaseClient'
 const api = {
 
   async list(table) {
-    const { data, error } = await supabase.from(table).select('*')
+    const { data, error } = await supabase.from(table).select('*').order('id', { ascending: false })
     if (error) throw error
     return data
   },
@@ -43,7 +43,7 @@ const api = {
     .delete()
     .match({ id })
     if (error) throw error
-    return data[0]
+    return data
   }
 }
 export default api;

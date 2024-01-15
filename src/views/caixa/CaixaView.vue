@@ -4,7 +4,7 @@
     <div class="card-body">
       <div class="col col-sm-12">
         <h5 class="card-title">{{ cardTitle }}</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">{{ cardSubtitle }}</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">{{ balance }}</h6>
       </div>
       <div class="col col-sm-6 offset-md-6 mb-3">
         <div class="input-group">
@@ -19,19 +19,24 @@
             class="btn rounded-pill btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#modalMovimentacaoCaixa"
+            @click="openModal"
           >
             {{ buttonAdd }}
           </button>
         </div>
       </div>
-      <tabela :dados-tabela="dataTable" @removeItem="removeCashMovement"></tabela>
+      <tabela
+        :dados-tabela="dataTable"
+        @removeItem="removeCashMovement"
+        @editItem="openModal"
+      ></tabela>
     </div>
   </div>
-  <modal-add-edit @saveForm="addCashMovement"></modal-add-edit>
+  <modal-add-edit @saveForm="addCashMovement"  @editForm="editCashMovement" :dataEdit="dataEdit"></modal-add-edit>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
-import Tabela from '../../components/Tabela/tabela-padrao.vue'
+import Tabela from './TabelaCaixa.vue'
 import ModalAddEdit from './ModalAddEdit.vue'
 import api from '../../api/api'
 
@@ -47,29 +52,54 @@ export default {
   data() {
     return {
       cardTitle: 'Caixa',
-      cardSubtitle: '',
+      balance: null,
       buttonAdd: 'Adicionar',
-      dataTable: null
+      dataTable: null,
+      dataEdit: null
     }
   },
   methods: {
     async getDataTable() {
-      console.log('atualizou')
-      this.dataTable = (await api.list('movimentacao_caixa')).reverse()
+      this.dataTable = await api.list('movimentacao_caixa')
+      this.balance = this.dataTable.length ? this.dataTable[0].saldo : null
     },
     async addCashMovement(form) {
-      await api.post('movimentacao_caixa', form)
+      console.log('addCashMovement', form)
+      let formatForm = {
+        ...form,
+        saldo: this.dataTable[0]?.saldo + parseFloat(form.valor)
+      }
+
+      await api.post('movimentacao_caixa', formatForm)
       await this.getDataTable()
     },
-    async removeCashMovement(id) {
-      await api.remove('movimentacao_caixa', id)
+    async editSaldo(form) {
+      let formatForm = {
+        ...form,
+        saldo: this.dataTable[0]?.saldo
+      }
+
+      await api.update('movimentacao_caixa', formatForm)
       await this.getDataTable()
     },
-    openModal() {
-      console.log('openModalAddEdit')
-    }
+    editCashMovement(form) {
+      this.removeCashMovement(form,'edit')
+      this.addCashMovement(form)
+    },
+    async removeCashMovement(form, actionEdit) {
+      this.dataTable[0].saldo = this.dataTable[0].saldo - (parseFloat(form.valor))
+      console.log('this.dataTable[0].saldo', this.dataTable[0].saldo)
+      
+      await api.remove('movimentacao_caixa', form.id)
+      this.editSaldo(form)
+      if(!actionEdit) await this.getDataTable()
+    },
+    openModal(dataMovimentacao) {
+      const myModal = new bootstrap.Modal(document.getElementById('modalMovimentacaoCaixa'))
+      myModal.show()
+      if(dataMovimentacao) this.dataEdit = dataMovimentacao
+    },
   }
 }
 </script>
 
-<style scope></style>

@@ -19,7 +19,7 @@ export default {
   props: {
     label: { type: String, default: '' },
     placeholder: { type: String, default: '' },
-    type: { type: String, default: 'text' },
+    type: { type: String, default: 'number' },
     modelValue: { type: [String, Number], default: null }
   },
   data() {
