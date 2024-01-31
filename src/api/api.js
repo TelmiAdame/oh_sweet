@@ -34,7 +34,7 @@ const api = {
      }])
      .match({ id: form.id })
     if (error) throw error
-    return data[0]
+    return data
   },
 
    async remove(table, id) {

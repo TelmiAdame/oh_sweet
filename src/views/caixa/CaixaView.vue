@@ -59,6 +59,9 @@ export default {
       myModal:null,
     }
   },
+  watch: {
+
+  },
   methods: {
     async getDataTable() {
       this.dataTable = await api.list('movimentacao_caixa')
@@ -66,7 +69,6 @@ export default {
     },
     async addCashMovement(form) {
       this.closeModal()
-      console.log('addCashMovement', form)
       let formatForm = {
         ...form,
         saldo: this.dataTable[0]?.saldo + parseFloat(form.valor)
@@ -75,27 +77,24 @@ export default {
       await api.post('movimentacao_caixa', formatForm)
       await this.getDataTable()
     },
-    async editSaldo(form) {
+    async removeCashMovement(form) {
+      this.dataTable[0].saldo = this.dataTable[0].saldo - (parseFloat(form.valor))
+      await api.remove('movimentacao_caixa', form.id)
+      this.editSaldo(this.dataTable[0].saldo)
+    },
+    async editSaldo(saldoEdit) {
       let formatForm = {
-        ...form,
-        saldo: this.dataTable[0]?.saldo
+        ...this.dataTable[0],
+        saldo: saldoEdit
       }
 
       await api.update('movimentacao_caixa', formatForm)
-      await this.getDataTable()
+      this.getDataTable()
     },
     editCashMovement(form) {
       this.closeModal()
-      this.removeCashMovement(form,'edit')
+      this.removeCashMovement(form)
       this.addCashMovement(form)
-    },
-    async removeCashMovement(form, actionEdit) {
-      this.dataTable[0].saldo = this.dataTable[0].saldo - (parseFloat(form.valor))
-      console.log('this.dataTable[0].saldo', this.dataTable[0].saldo)
-      
-      await api.remove('movimentacao_caixa', form.id)
-      this.editSaldo(form)
-      if(!actionEdit) await this.getDataTable()
     },
     openModal(dataMovimentacao) {
       const myModal = new bootstrap.Modal(document.getElementById('modalMovimentacaoCaixa'))
@@ -107,7 +106,7 @@ export default {
       myModal.hide()
       const backdrop = document.querySelector('.modal-backdrop');
       if (backdrop) {backdrop.remove();}
-    }
+    },
   }
 }
 </script>
