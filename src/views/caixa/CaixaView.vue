@@ -32,7 +32,7 @@
       ></tabela>
     </div>
   </div>
-  <modal-add-edit @saveForm="addCashMovement"  @editForm="editCashMovement" :dataEdit="dataEdit"></modal-add-edit>
+  <modal-add-edit @saveForm="addCashMovement"  @editForm="editCashMovement" :dataEdit="dataEdit" ></modal-add-edit>
 </template>
 <script>
 import FullLayout from '../../components/FullLayout/full-layout.vue'
@@ -55,7 +55,8 @@ export default {
       balance: null,
       buttonAdd: 'Adicionar',
       dataTable: null,
-      dataEdit: null
+      dataEdit: null,
+      myModal:null,
     }
   },
   methods: {
@@ -64,6 +65,7 @@ export default {
       this.balance = this.dataTable.length ? this.dataTable[0].saldo : null
     },
     async addCashMovement(form) {
+      this.closeModal()
       console.log('addCashMovement', form)
       let formatForm = {
         ...form,
@@ -83,6 +85,7 @@ export default {
       await this.getDataTable()
     },
     editCashMovement(form) {
+      this.closeModal()
       this.removeCashMovement(form,'edit')
       this.addCashMovement(form)
     },
@@ -99,6 +102,12 @@ export default {
       myModal.show()
       if(dataMovimentacao) this.dataEdit = dataMovimentacao
     },
+    closeModal(){
+      const myModal = new bootstrap.Modal(document.getElementById('modalMovimentacaoCaixa'))
+      myModal.hide()
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {backdrop.remove();}
+    }
   }
 }
 </script>

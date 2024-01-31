@@ -13,7 +13,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          <pre>{{ form }}</pre>
           <form action="">
             <div class="mb-3">
               <input-base
