@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/caixa',
+      path: 'caixa',
       name: 'caixa',
       component: () => import('../views/caixa/CaixaView.vue')
     }
